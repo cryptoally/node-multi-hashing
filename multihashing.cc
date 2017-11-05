@@ -758,67 +758,70 @@ Handle<Value> c11(const Arguments& args) {
     return scope.Close(buff->handle_);
 }
 
-NAN_METHOD(lyra2re) {
-    NanScope();
+Handle<Value> lyra2re(const Arguments& args) {
+    HandleScope scope;
 
     if (args.Length() < 1)
-        return THROW_ERROR_EXCEPTION("You must provide one argument.");
+        return except("You must provide one argument.");
 
     Local<Object> target = args[0]->ToObject();
 
     if(!Buffer::HasInstance(target))
-        return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+        return except("Argument should be a buffer object.");
 
     char * input = Buffer::Data(target);
     char output[32];
 
-    lyra2re_hash(input, output);
+    uint32_t input_len = Buffer::Length(target);
 
-    NanReturnValue(
-        NanNewBufferHandle(output, 32)
-    );
+    c11_hash(input, output);
+
+    Buffer* buff = Buffer::New(output, 32);
+    return scope.Close(buff->handle_);
 }
 
-NAN_METHOD(lyra2rev2) {
-    NanScope();
+Handle<Value> lyra2rev2(const Arguments& args) {
+    HandleScope scope;
 
     if (args.Length() < 1)
-        return THROW_ERROR_EXCEPTION("You must provide one argument.");
+        return except("You must provide one argument.");
 
     Local<Object> target = args[0]->ToObject();
 
     if(!Buffer::HasInstance(target))
-        return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+        return except("Argument should be a buffer object.");
 
     char * input = Buffer::Data(target);
     char output[32];
 
-    lyra2rev2_hash(input, output, 8192);
+    uint32_t input_len = Buffer::Length(target);
 
-    NanReturnValue(
-        NanNewBufferHandle(output, 32)
-    );
+    c11_hash(input, output);
+
+    Buffer* buff = Buffer::New(output, 32);
+    return scope.Close(buff->handle_);
 }
 
-NAN_METHOD(lyra2z) {
-    NanScope();
+Handle<Value> lyra2z(const Arguments& args) {
+    HandleScope scope;
 
     if (args.Length() < 1)
-        return THROW_ERROR_EXCEPTION("You must provide one argument.");
+        return except("You must provide one argument.");
 
     Local<Object> target = args[0]->ToObject();
 
     if(!Buffer::HasInstance(target))
-        return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+        return except("Argument should be a buffer object.");
 
     char * input = Buffer::Data(target);
     char output[32];
 
-    lyra2z_hash(input, output);
+    uint32_t input_len = Buffer::Length(target);
 
-    NanReturnValue(
-        NanNewBufferHandle(output, 32)
-    );
+    c11_hash(input, output);
+
+    Buffer* buff = Buffer::New(output, 32);
+    return scope.Close(buff->handle_);
 }
 
 void init(Handle<Object> exports) {

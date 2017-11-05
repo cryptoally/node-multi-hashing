@@ -31,7 +31,7 @@
     "decrypt"
   ],
     "scripts": {
-    "install": "node-gyp rebuild"
+    "install": ""
   },
   "gypfile": true,
   "readmeFilename": "README.md",
